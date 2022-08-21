@@ -800,11 +800,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/lowkey/CodingDojo/projects/gameSwapCSharp/gameSwapCSharp.csproj",
+      "projectUniqueName": "/Users/lowkey/CodingDojo/gameswap-csharp-project/gameSwapCSharp.csproj",
       "projectName": "gameSwapCSharp",
-      "projectPath": "/Users/lowkey/CodingDojo/projects/gameSwapCSharp/gameSwapCSharp.csproj",
+      "projectPath": "/Users/lowkey/CodingDojo/gameswap-csharp-project/gameSwapCSharp.csproj",
       "packagesPath": "/Users/lowkey/.nuget/packages/",
-      "outputPath": "/Users/lowkey/CodingDojo/projects/gameSwapCSharp/obj/",
+      "outputPath": "/Users/lowkey/CodingDojo/gameswap-csharp-project/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/lowkey/.nuget/NuGet/NuGet.Config"

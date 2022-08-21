@@ -1,0 +1,58 @@
+@model Game
+@{
+    ViewData["Title"] = "Game Listing";
+}
+@using GiantBomb.Api
+@using System.Text.Json
+
+@{
+    var giantBomb = new GiantBombRestClient($"{ViewBag.gbApi}");
+    string[] filters = new String[4] {
+        "id",
+        "name",
+        "image",
+        "deck"
+    };
+    var results = giantBomb.SearchForGames(query: Model.Title, limitFields: filters, pageSize: 1);
+    string json = JsonSerializer.Serialize(results);
+    using JsonDocument doc = JsonDocument.Parse(json);
+    JsonElement root = doc.RootElement;
+    var largeImg = root[0].GetProperty("Image").GetProperty("MediumUrl");
+    var Description = root[0].GetProperty("Deck");
+}
+
+<div class="text-center">
+    <h1 class="text-start">@Model.Title</h1>
+    <img src="@largeImg" alt="@Model.Title Image" style="object-fit: scale-down; width:100%; height:400px;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Listed By</th>
+                <th scope="col">Platform</th>
+                <th scope="col">Quality</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Owner.Username</td>
+                <td>@Model.Platform</td>
+                <td>@Model.Quality</td>
+                <td>@Model.Price</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <h4 class="text-start">Description:</h4>
+        <p>@Description</p>
+    </div>
+    @if (Model.Owner.UserId != Context.Session.GetInt32("user"))
+    {
+        <a href="/game/message/@Model.GameId" class="btn btn-primary">I'm Interested!</a>
+    }
+    else
+    {
+        <a href="/game/edit/@Model.GameId" class="btn btn-warning">Edit Listing</a>
+        <a href="/game/delete/@Model.GameId" class="btn btn-danger">Remove Listing</a>
+    }
+</div>

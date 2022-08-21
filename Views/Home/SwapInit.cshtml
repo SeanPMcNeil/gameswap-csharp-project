@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Start a Swap";
+}
+@model Swap
+
+<div class="text-center">
+    <h1 class="text-start">Swap Manager - Owner</h1>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <p>Listing Owner: @Model.Seller.Username</p>
+            <p>Buyer: @Model.Buyer.Username</p>
+            <p>Buyer Address: @Model.Buyer.Address</p>
+        </div>
+        <div class="col">
+            <p>Game: @Model.Game.Title</p>
+            <p>Accepted Coin Offer: @Model.FinalPrice</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <form action="/swap/initialize" method="post">
+            <div class="form-group">
+                <input type="hidden" asp-for="FinalPrice" value="@Model.FinalPrice">
+                <input type="hidden" asp-for="BuyerId" value="@Model.BuyerId">
+                <input type="hidden" asp-for="SellerId" value="@Model.SellerId">
+                <input type="hidden" asp-for="GameId" value="@Model.GameId">
+            </div>
+            <div class="form-group">
+                <label for="TrackingInfo" class="form-label">Tracking #</label>
+                <input asp-for="TrackingInfo" class="form-control">
+                <span asp-validation-for="TrackingInfo" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Submit Tracking Info" class="btn btn-lg btn-success">
+            </div>
+        </form>
+    </div>
+</div>

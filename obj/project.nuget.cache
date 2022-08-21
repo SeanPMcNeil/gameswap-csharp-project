@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NWMCZCoU0fCEG4GGo/2m+SYgwT9vbZ6pfwX+ocd4wzOIk0Ck/Ziiv9djUS1oJ38qsnDgZVul85j4pRgbXip3kQ==",
+  "dgSpecHash": "1sL6UV3IiosUZYPw59Yv/cL16yxYFMdiN+8oj78hw+ItIm7s6Ir13BKCEkC7cmSA2WpZxKF3NmfSA93K4L9lrA==",
   "success": true,
-  "projectFilePath": "/Users/lowkey/CodingDojo/projects/gameSwapCSharp/gameSwapCSharp.csproj",
+  "projectFilePath": "/Users/lowkey/CodingDojo/gameswap-csharp-project/gameSwapCSharp.csproj",
   "expectedPackageFiles": [
     "/Users/lowkey/.nuget/packages/giantbomb.api/3.0.0/giantbomb.api.3.0.0.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",

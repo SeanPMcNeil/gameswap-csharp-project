@@ -1,0 +1,81 @@
+@{
+    ViewData["Title"] = "View a Message";
+}
+@model Message
+
+<div class="text-center">
+    <h3>@ViewBag.oneGame.Title | Original Price: @ViewBag.oneGame.Price</h3>
+    @{
+        int latestPrice = Model.ProposedPrice;
+        int latestSender = Model.SenderId;
+        int count = 1;
+    }
+    <h4 class="text-start">Proposed Price:  <span class="text-primary">@Model.ProposedPrice</span> Coins</h4>
+    @if (Model.SenderId == Context.Session.GetInt32("user"))
+    {
+        <h5 class="text-start">Message from: You</h5>
+    }
+    else
+    {
+        <h5 class="text-start">Message from: @Model.Sender.Username</h5>
+    }
+    <h5 class="text-start">Message:</h5>
+    <p>@Model.MessageContent</p>
+    @foreach (Response r in Model.Responses)
+    {
+        <hr>
+        <h4 class="text-start">Response #@count</h4>
+        @if (r.UserId != Model.SenderId)
+        {
+            
+            if (r.UserId == Context.Session.GetInt32("user"))
+            {
+                <h6 class="text-start">From: You</h6>
+            }
+            else
+            {
+                <h6 class="text-start">From: @Model.Recipient.Username (Seller)</h6>
+            }
+        }
+        else
+        {
+            if (r.UserId == Context.Session.GetInt32("user"))
+            {
+                <h6 class="text-start">From: You</h6>
+            }
+            else
+            {
+                <h6 class="text-start">From: @Model.Sender.Username</h6>
+            }
+        }
+        <h6 class="text-start">Proposed Price: <span class="text-primary">@r.ProposedPrice</span> Coins</h6>
+        latestPrice = r.ProposedPrice;
+        latestSender = r.UserId;
+        count++;
+        <p>@r.ResponseContent</p>
+        <p class="text-start">Sent At: @r.CreatedAt</p>
+    }
+    @if (latestSender != Context.Session.GetInt32("user"))
+    {
+        if (ViewBag.AlreadyTraded < 1)
+        {
+            <a href="/message/@Model.MessageId/reply" class="btn btn-info">Reply</a>
+        }
+    }
+    <hr>
+    @if (Model.RecipientId == Context.Session.GetInt32("user") && latestSender != Context.Session.GetInt32("user"))
+    {
+        if (ViewBag.AlreadyTraded == 0)
+        {
+            <a href="/swap/@Model.SenderId/@Model.RecipientId/@Model.GameId/@latestPrice" class="btn btn-lg btn-success">Accept at @latestPrice Coins</a>
+        }
+    }
+    @if (ViewBag.AlreadyTraded == 2)
+    {
+        <h5>Swap in Progress!</h5>
+    }
+    else if (ViewBag.AlreadyTraded == 1)
+    {
+        <h5>Swap Completed!</h5>
+    }
+</div>

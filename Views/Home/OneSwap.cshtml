@@ -1,0 +1,38 @@
+@{
+    ViewData["Title"] = "Swap Control";
+}
+@model Swap
+
+<div class="text-center">
+    <h1 class="text-start">Swap Info</h1>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <p>Listing Owner: @Model.Seller.Username</p>
+            <p>Buyer: @Model.Buyer.Username</p>
+        </div>
+        <div class="col">
+            <p>Game: @Model.Game.Title</p>
+            <p>Accepted Coin Offer: @Model.FinalPrice</p>
+        </div>
+    </div>
+    <hr>
+    <h3 class="text-start">Shipment Tracking</h3>
+    <div class="row">
+        <div class="col">
+            <p>Tracking #:</p>
+            <p>@Model.TrackingInfo</p>
+        </div>
+        <div class="col">
+            <p>Future USPS Tracking Integration</p>
+        </div>
+    </div>
+    @if (Model.BuyerId == Context.Session.GetInt32("user"))
+    {
+        <hr>
+        <p>Game Received?</p>
+        <form action="/swap/finalize/@Model.SwapId" method="post">
+            <input type="submit" value="I Received The Game!" class="btn btn-lg btn-success">
+        </form>
+    }
+</div>

@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "New Message";
+}
+@model Message
+
+<div class="text-center">
+    <h2 class="text-start">Inquiry for <span class="text-primary">@ViewBag.SingleGame.Title</span></h2>
+    <h4 class="text-start">Listed By: <span class="text-success">@ViewBag.SingleGame.Owner.Username</span></h4>
+    <h4 class="text-start">Price: <span class="text-warning">@ViewBag.SingleGame.Price</span></h4>
+
+    <form action="/game/message/@ViewBag.SingleGame.GameId/send" method="post">
+        <div class="form-group">
+            <label for="MessageContent" class="form-label">Message</label>
+            <textarea asp-for="MessageContent" rows="3" class="form-control"></textarea>
+            <span asp-validation-for="MessageContent" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="ProposedPrice" class="form-label">Proposed Price:</label>
+            <input asp-for="ProposedPrice" class="form-control">
+            <span asp-validation-for="ProposedPrice" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-2">
+            <input type="submit" value="Send Inquiry" class="btn btn-info">
+        </div>
+    </form>
+</div>

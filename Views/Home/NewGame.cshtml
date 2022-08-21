@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "New Listing";
+}
+@model Game
+
+<div class="text-center">
+    <h1 class="text-start">New Game Listing</h1>
+    <form action="/game/add" method="post">
+        <div class="form-group">
+            <label for="Title" class="form-label">Game Name</label>
+            <input asp-for="Title" class="form-control">
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="Platform" class="form-label">Platform</label>
+            <select asp-for="Platform" class="form-select">
+                <option value="NES">NES</option>
+                <option value="SNES">SNES</option>
+                <option value="N64">N64</option>
+                <option value="GameCube">GameCube</option>
+                <option value="Wii">Wii</option>
+                <option value="Wii U">Wii U</option>
+                <option value="Switch">Switch</option>
+                <option value="PS1">PS1</option>
+                <option value="PS2">PS2</option>
+                <option value="PS3">PS3</option>
+                <option value="PS4">PS4</option>
+                <option value="PS5">PS5</option>
+                <option value="Xbox">Xbox</option>
+                <option value="Xbox 360">Xbox 360</option>
+                <option value="Xbox One/S/X">Xbox One/S/X</option>
+                <option value="Xbox Series X/S">Xbox Series X/S</option>
+            </select>
+            <span asp-validation-for="Platform" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="Quality" class="form-label">Quality</label>
+            <select asp-for="Quality" class="form-select">
+                <option value="Poor">Poor</option>
+                <option value="Fair">Fair</option>
+                <option value="Good">Good</option>
+                <option value="Excellent">Excellent</option>
+                <option value="Like New">Like New</option>
+            </select>
+            <span asp-validation-for="Quality" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="Price" class="form-label">Price</label>
+            <input asp-for="Price" class="form-control">
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-2">
+            <input type="submit" value="Add Listing" class="btn btn-info">
+        </div>
+    </form>
+</div>

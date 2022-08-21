@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@using GiantBomb.Api
+@using System.Text.Json
+
+@{
+    List<int> SwapIds = new List<int>();
+    foreach (Swap s in ViewBag.RelevantSwaps)
+    {
+        SwapIds.Add(s.GameId);
+    }
+}
+
+<div class="text-center">
+    <div class="row">
+        <div class="col-10 offset-1">
+            <h1>Welcome, @ViewBag.LoggedUser.Username</h1>
+        </div>
+        <div class="col-1">
+            <form action="/user/addcoins" method="post">
+                <input type="submit" value="Add 10 Coins" class="btn btn-info">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <h5>Current Coins: @ViewBag.LoggedUser.Coins</h5>
+    </div>
+
+    <h4 class="text-start">Your Current Listings</h4>
+    <div class="row">
+        @foreach (Game g in ViewBag.LoggedUser.OwnedGames)
+        {
+            if (!SwapIds.Contains(g.GameId))
+            {
+                var giantBomb = new GiantBombRestClient($"{ViewBag.gbApi}");
+                string[] filters = new String[3] {
+                    "id",
+                    "name",
+                    "image"
+                };
+                var results = giantBomb.SearchForGames(query: g.Title, limitFields: filters, pageSize: 1);
+                string json = JsonSerializer.Serialize(results);
+                using JsonDocument doc = JsonDocument.Parse(json);
+                JsonElement root = doc.RootElement;
+                var u1 = root[0].GetProperty("Image").GetProperty("SmallUrl");
+
+                <div class="col-3 mt-2">
+                    <div class="card bg-info" style="max-width: 12rem;">
+                        <p class="card-title">@g.Title</p>
+                        <img class="card-img" src="@u1" alt="@g.Title Cover Image" style="max-height: 225px;">
+                        <p><a href="/game/@g.GameId" class="card-text stretched-link text-white">@g.Platform | @g.Price Coins</a></p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <hr>
+    <div class="row justify-content-end text-end">
+        <div class="col-3">
+            <a href="/browse" class="btn btn-primary">Browse Available Games</a>
+        </div>
+        <div class="col-2">
+            <a href="/game/new" class="btn btn-success">List a New Game</a>
+        </div>
+    </div>
+    <h4 class="text-start">Your Pending Swaps</h4>
+    <div class="row">
+        @foreach (Swap s in ViewBag.RelevantSwaps)
+        {
+            if (s.GameReceived != 1)
+            {
+                var giantBomb = new GiantBombRestClient($"{ViewBag.gbApi}");
+                string[] filters = new String[3] {
+                    "id",
+                    "name",
+                    "image"
+                };
+                var results = giantBomb.SearchForGames(query: s.Game.Title, limitFields: filters, pageSize: 1);
+                string json = JsonSerializer.Serialize(results);
+                using JsonDocument doc = JsonDocument.Parse(json);
+                JsonElement root = doc.RootElement;
+                var u1 = root[0].GetProperty("Image").GetProperty("SmallUrl");
+
+                <div class="col-3 mt-2">
+                    <div class="card bg-success" style="max-width: 12rem;">
+                        <p class="card-title">@s.Game.Title</p>
+                        <p class="card-text">Swapped to: @s.Buyer.Username From: @s.Seller.Username</p>
+                        <img class="card-img" src="@u1" alt="@s.Game.Title Cover Image" style="max-height: 225px;">
+                        <p><a href="/swap/view/@s.SwapId" class="card-text stretched-link text-white">Price: @s.FinalPrice</a></p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
