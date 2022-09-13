@@ -1,4 +1,5 @@
 # GameSwap
+## Try it out [Here](http://18.212.79.4/)
 ### A Video Game Trading Marketplace
 ### Built using C# .NET 6 MVC and Bootstrap
 
