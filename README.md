@@ -1,5 +1,6 @@
 # GameSwap
 ## Try it out [Here](http://18.212.79.4/)
+### Test Credentials - Email: user@mail.com | Password: password
 ### A Video Game Trading Marketplace
 ### Built using C# .NET 6 MVC and Bootstrap
 
