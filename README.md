@@ -21,7 +21,7 @@ The goal of GameSwap is to allow registered users to list games they want to sel
 - Game images and descriptions are dynamically called from the GiantBomb API depending on what the page needs to load.
 
 #### Future Considerations
-- Better API querying/caching for suplicate requests. Slightly unfamiliar with making asynchronous calls, especially within C#, so page loading relying on API content is slow.
+- Refreshed API usage so it does not need to be called so frequently
 - Fleshed out "Coins" system to monetize the site. Potential integration with Stripe to allow for user payments to the site to frontload Coins for trades.
 - Integrate the USPS API for user address validation/shipping information validation.
 - Allow users to upload their own images of listed games.
