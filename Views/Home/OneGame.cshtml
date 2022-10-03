@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Game Listing";
 }
-@using GiantBomb.Api
+@* @using GiantBomb.Api
 @using System.Text.Json
 
 @{
@@ -19,11 +19,11 @@
     JsonElement root = doc.RootElement;
     var largeImg = root[0].GetProperty("Image").GetProperty("MediumUrl");
     var Description = root[0].GetProperty("Deck");
-}
+} *@
 
 <div class="text-center">
     <h1 class="text-start">@Model.Title</h1>
-    <img src="@largeImg" alt="@Model.Title Image" style="object-fit: scale-down; width:100%; height:400px;">
+    <img src="@Model.Image" alt="@Model.Title Image" style="object-fit: scale-down; width:100%; height:400px;">
     <table class="table">
         <thead>
             <tr>
@@ -44,7 +44,7 @@
     </table>
     <div class="row">
         <h4 class="text-start">Description:</h4>
-        <p>@Description</p>
+        <p>@Model.Description</p>
     </div>
     @if (Model.Owner.UserId != Context.Session.GetInt32("user"))
     {

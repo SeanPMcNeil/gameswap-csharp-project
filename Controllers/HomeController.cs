@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using gameSwapCSharp.Models;
+using GiantBomb.Api;
+using System.Text.Json;
 
 namespace gameSwapCSharp.Controllers;
 
@@ -156,6 +158,23 @@ public class HomeController : Controller
                 ModelState.AddModelError("Title", "Invalid Listing Addition");
                 return View("NewGame");
             }
+
+            var giantBomb = new GiantBombRestClient(_config["GiantBomb:ApiKey"]);
+            string[] filters = new String[4] {
+                "id",
+                "name",
+                "image",
+                "deck"
+            };
+
+            var results = giantBomb.SearchForGames(query: newGame.Title, limitFields: filters, pageSize: 1);
+            string json = JsonSerializer.Serialize(results);
+            using JsonDocument doc = JsonDocument.Parse(json);
+            JsonElement root = doc.RootElement;
+
+            newGame.Image = root[0].GetProperty("Image").GetProperty("MediumUrl").ToString();
+            newGame.Description = root[0].GetProperty("Deck").ToString();
+
             _context.Add(newGame);
             _context.SaveChanges();
             return RedirectToAction("Dashboard");
@@ -175,7 +194,7 @@ public class HomeController : Controller
             return RedirectToAction("UserActions");
         }
         Game singleGame = _context.Games.Include(o => o.Owner).SingleOrDefault(g => g.GameId == gameId);
-        ViewBag.gbApi = _config["GiantBomb:ApiKey"];
+        // ViewBag.gbApi = _config["GiantBomb:ApiKey"];
         return View(singleGame);
     }
 
