@@ -18,7 +18,7 @@
         {
             if(!SwapIds.Contains(g.GameId) && g.UserId != Context.Session.GetInt32("user"))
             {
-                var giantBomb = new GiantBombRestClient($"{ViewBag.gbApi}");
+                @* var giantBomb = new GiantBombRestClient($"{ViewBag.gbApi}");
                     string[] filters = new String[3] {
                         "id",
                         "name",
@@ -28,11 +28,11 @@
                     string json = JsonSerializer.Serialize(results);
                     using JsonDocument doc = JsonDocument.Parse(json);
                     JsonElement root = doc.RootElement;
-                    var u1 = root[0].GetProperty("Image").GetProperty("SmallUrl");
+                    var u1 = root[0].GetProperty("Image").GetProperty("SmallUrl"); *@
                 <div class="col-3 mt-2">
                     <div class="card bg-light" style="max-width: 12rem;">
                         <p class="card-title text-dark">@g.Title</p>
-                        <img class="card-img" src="@u1" alt="@g.Title Cover Image" style="max-height: 210px;">
+                        <img class="card-img" src="@g.Image" alt="@g.Title Cover Image" style="max-height: 210px;">
                         <p><a href="/game/@g.GameId" class="card-text stretched-link text-dark">@g.Platform | @g.Price Coins | @g.Owner.Username</a></p>
                     </div>
                 </div>
