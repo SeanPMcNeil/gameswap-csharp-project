@@ -2,24 +2,6 @@
 @{
     ViewData["Title"] = "Game Listing";
 }
-@* @using GiantBomb.Api
-@using System.Text.Json
-
-@{
-    var giantBomb = new GiantBombRestClient($"{ViewBag.gbApi}");
-    string[] filters = new String[4] {
-        "id",
-        "name",
-        "image",
-        "deck"
-    };
-    var results = giantBomb.SearchForGames(query: Model.Title, limitFields: filters, pageSize: 1);
-    string json = JsonSerializer.Serialize(results);
-    using JsonDocument doc = JsonDocument.Parse(json);
-    JsonElement root = doc.RootElement;
-    var largeImg = root[0].GetProperty("Image").GetProperty("MediumUrl");
-    var Description = root[0].GetProperty("Deck");
-} *@
 
 <div class="text-center">
     <h1 class="text-start">@Model.Title</h1>
