@@ -2,9 +2,6 @@
     ViewData["Title"] = "Dashboard";
 }
 
-@* @using GiantBomb.Api
-@using System.Text.Json *@
-
 @{
     List<int> SwapIds = new List<int>();
     foreach (Swap s in ViewBag.RelevantSwaps)
@@ -15,17 +12,19 @@
 
 <div class="text-center">
     <div class="row">
-        <div class="col-10 offset-1">
+        <div>
             <h1>Welcome, @ViewBag.LoggedUser.Username</h1>
-        </div>
-        <div class="col-1">
-            <form action="/user/addcoins" method="post">
-                <input type="submit" value="Add 10 Coins" class="btn btn-info">
-            </form>
         </div>
     </div>
     <div class="row">
         <h5>Current Coins: @ViewBag.LoggedUser.Coins</h5>
+    </div>
+    <div class="row">
+        <div class="mt-2">
+            <form action="/user/addcoins" method="post">
+                <input type="submit" value="Add 10 Coins" class="btn btn-info">
+            </form>
+        </div>
     </div>
 
     <h4 class="text-start">Your Current Listings</h4>
@@ -34,18 +33,6 @@
         {
             if (!SwapIds.Contains(g.GameId))
             {
-                @* var giantBomb = new GiantBombRestClient($"{ViewBag.gbApi}");
-                string[] filters = new String[3] {
-                    "id",
-                    "name",
-                    "image"
-                };
-                var results = giantBomb.SearchForGames(query: g.Title, limitFields: filters, pageSize: 1);
-                string json = JsonSerializer.Serialize(results);
-                using JsonDocument doc = JsonDocument.Parse(json);
-                JsonElement root = doc.RootElement;
-                var u1 = root[0].GetProperty("Image").GetProperty("SmallUrl"); *@
-
                 <div class="col-3 mt-2">
                     <div class="card bg-info" style="max-width: 12rem;">
                         <p class="card-title">@g.Title</p>
@@ -71,18 +58,6 @@
         {
             if (s.GameReceived != 1)
             {
-                @* var giantBomb = new GiantBombRestClient($"{ViewBag.gbApi}");
-                string[] filters = new String[3] {
-                    "id",
-                    "name",
-                    "image"
-                };
-                var results = giantBomb.SearchForGames(query: s.Game.Title, limitFields: filters, pageSize: 1);
-                string json = JsonSerializer.Serialize(results);
-                using JsonDocument doc = JsonDocument.Parse(json);
-                JsonElement root = doc.RootElement;
-                var u1 = root[0].GetProperty("Image").GetProperty("SmallUrl"); *@
-
                 <div class="col-3 mt-2">
                     <div class="card bg-success" style="max-width: 12rem;">
                         <p class="card-title">@s.Game.Title</p>
