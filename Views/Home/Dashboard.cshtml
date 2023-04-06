@@ -2,11 +2,10 @@
     ViewData["Title"] = "Dashboard";
 }
 
-@{
-    List<int> SwapIds = new List<int>();
-    foreach (Swap s in ViewBag.RelevantSwaps)
+@functions {
+    List<int> GetSwapIds(IEnumerable<Swap> swaps)
     {
-        SwapIds.Add(s.GameId);
+        return swaps.Select(s => s.GameId).ToList();
     }
 }
 
@@ -29,17 +28,20 @@
 
     <h4 class="text-start">Your Current Listings</h4>
     <div class="row">
+        @{
+            List<int> swapIds = GetSwapIds(ViewBag.RelevantSwaps);
+        }
         @foreach (Game g in ViewBag.LoggedUser.OwnedGames)
         {
-            if (!SwapIds.Contains(g.GameId))
+            if (!swapIds.Contains(g.GameId))
             {
-                <div class="col-3 mt-2">
-                    <div class="card bg-info" style="max-width: 12rem;">
-                        <p class="card-title">@g.Title</p>
-                        <img class="card-img" src="@g.Image" alt="@g.Title Cover Image" style="max-height: 225px;">
-                        <p><a href="/game/@g.GameId" class="card-text stretched-link text-white">@g.Platform | @g.Price Coins</a></p>
-                    </div>
-                </div>
+                @:<div class="col-3 mt-2">
+                @:<div class="card bg-info" style="max-width: 12rem;">
+                @:<p class="card-title">@g.Title</p>
+                @:<img class="card-img" src="@g.Image" alt="@g.Title Cover Image" style="max-height: 225px;">
+                @:<p><a href="/game/@g.GameId" class="card-text stretched-link text-white">@g.Platform | @g.Price Coins</a></p>
+                @:</div>
+                @:</div>
             }
         }
     </div>
@@ -58,14 +60,14 @@
         {
             if (s.GameReceived != 1)
             {
-                <div class="col-3 mt-2">
-                    <div class="card bg-success" style="max-width: 12rem;">
-                        <p class="card-title">@s.Game.Title</p>
-                        <p class="card-text">Swapped to: @s.Buyer.Username From: @s.Seller.Username</p>
-                        <img class="card-img" src="@s.Game.Image" alt="@s.Game.Title Cover Image" style="max-height: 225px;">
-                        <p><a href="/swap/view/@s.SwapId" class="card-text stretched-link text-white">Price: @s.FinalPrice</a></p>
-                    </div>
-                </div>
+                @:<div class="col-3 mt-2">
+                @:<div class="card bg-success" style="max-width: 12rem;">
+                @:<p class="card-title">@s.Game.Title</p>
+                @:<p class="card-text">Swapped to: @s.Buyer.Username From: @s.Seller.Username</p>
+                @:<img class="card-img" src="@s.Game.Image" alt="@s.Game.Title Cover Image" style="max-height: 225px;">
+                @:<p><a href="/swap/view/@s.SwapId" class="card-text stretched-link text-white">Price: @s.FinalPrice</a></p>
+                @:</div>
+                @:</div>
             }
         }
     </div>
