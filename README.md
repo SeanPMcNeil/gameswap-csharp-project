@@ -1,5 +1,4 @@
 # GameSwap
-### Test Credentials - Email: user@mail.com | Password: password
 ### A Video Game Trading Marketplace
 ### Built using C# .NET 6 MVC and Bootstrap
 
